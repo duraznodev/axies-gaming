@@ -1,19 +1,18 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Ui;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Layout extends Component
+class IconButton extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $name = 'Layout')
+    public function __construct(public string $text, public string $class = '')
     {
-        //
     }
 
     /**
@@ -21,6 +20,7 @@ class Layout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.layout');
+
+        return view('components.ui.icon-button');
     }
 }

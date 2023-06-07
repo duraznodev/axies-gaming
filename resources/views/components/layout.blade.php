@@ -9,7 +9,7 @@
         rel="stylesheet">
 </head>
 <body class="bg-[#14141F] text-white">
-<x-header/>
+<x-header :name="$name"/>
 {{ $slot }}
 <x-footer/>
 </body>

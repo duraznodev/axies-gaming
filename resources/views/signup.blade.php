@@ -1,8 +1,9 @@
 <x-layout :name="$name">
     <form class="mt-20 flex flex-col items-center w-[690px] h-[716px] mx-auto">
-        <h4 class="text-4xl font-bold">Login to NFTs</h4>
-        <x-form.heading class="mt-16" text="Or login with email"/>
+        <h4 class="text-4xl font-bold">Signup to NFTs</h4>
+        <x-form.heading class="mt-16" text="Or signup with email"/>
         <div class="flex w-full mt-[30px] gap-y-6 flex-col">
+            <x-form.input class="w-full" placeholder="Your Full Name" name="email" type="email"/>
             <x-form.input class="w-full" placeholder="Your Email Address" name="email" type="email"/>
             <x-form.input class="w-full" placeholder="Your Password" name="password" type="password"/>
         </div>
@@ -13,7 +14,7 @@
             </div>
             <a href="#" class="text-[15px] font-bold">Forgot Password ?</a>
         </div>
-        <x-form.button class="mt-[34px]" text="Login"/>
+        <x-form.button class="mt-[34px]" text="Signup"/>
     </form>
 </x-layout>
 
