@@ -11,7 +11,7 @@ class Heading extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $text,public  string $class = '')
+    public function __construct(public string $text, public string $class = '')
     {
         //
     }
