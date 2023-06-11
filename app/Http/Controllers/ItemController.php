@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemCreateRequest;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ItemController extends Controller
 {
@@ -28,9 +30,14 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ItemCreateRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['title']);
+
+        $item = auth()->user()->items()->create($data);
+
+        return redirect()->route('items.show', $item);
     }
 
     /**

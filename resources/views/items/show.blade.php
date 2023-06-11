@@ -4,7 +4,7 @@
         <div class="flex gap-x-[100px]">
             <div class="bg-[#7A798A] rounded-[10px] w-[690px] h-[690px]">
             </div>
-            <div class="max-w-[620px]">
+            <div class="min-w-[620px]">
                 <div>
                     <span class="text-4xl font-bold">{{ $item->title }}</span>
                     <div class="flex justify-between mt-4">

@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-header name="Login"/>
     <x-auth-session-status class="mb-4" :status="session('status')"/>
     <form  class="mt-20 flex flex-col items-center w-[690px] h-[716px] mx-auto" method="POST" action="{{ route('login') }}">
@@ -34,4 +34,4 @@
             {{ __('Log in') }}
         </x-primary-button>
     </form>
-</x-guest-layout>
+</x-app-layout>

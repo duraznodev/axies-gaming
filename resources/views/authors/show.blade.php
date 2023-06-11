@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="mt-[60px] flex flex-wrap">
+        <div class="mt-[60px] flex flex-wrap gap-[30px]">
             @foreach($author->items as $item)
                 <x-item.card :item="$item"/>
             @endforeach

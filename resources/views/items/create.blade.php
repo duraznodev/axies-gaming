@@ -33,7 +33,9 @@
                 </div>
             </div>
         </div>
-        <form class="flex flex-col gap-y-6 w-full" enctype="multipart/form-data">
+        <form method="post" action="{{ action([\App\Http\Controllers\ItemController::class,'store']) }}"
+              class="flex flex-col gap-y-6 w-full" enctype="multipart/form-data">
+            @csrf
             <div class="flex flex-col gap-y-5">
                 <x-input-label value="Upload File"/>
                 <div class="relative border border-[#343444] rounded-lg py-[27px] px-[60px]">
@@ -54,11 +56,11 @@
             </div>
             <div class="flex flex-col gap-y-5">
                 <x-input-label value="Price"/>
-                <x-text-input name="price" placeholder="Enter price for one item (ETH)"/>
+                <x-text-input value="{{ old('price') }}" name="price" placeholder="Enter price for one item (ETH)"/>
             </div>
             <div class="flex flex-col gap-y-5">
                 <x-input-label value="Title"/>
-                <x-text-input name="title" placeholder="Item Name"/>
+                <x-text-input value="{{ old('title') }}" name="title" placeholder="Item Name"/>
             </div>
             <div class="flex flex-col gap-y-5">
                 <x-input-label value="Description"/>
@@ -68,15 +70,27 @@
             <div class="flex gap-x-5">
                 <div class="flex flex-col gap-y-5 flex-1">
                     <x-input-label value="Royalties"/>
-                    <x-text-input type="number" step="0.01" name="royalties" placeholder="5%"/>
+                    <x-text-input value="{{ old('royalties') }}" type="number" step="0.01" name="royalties"
+                                  placeholder="5%"/>
                 </div>
                 <div class="flex flex-col gap-y-5 flex-1">
                     <x-input-label value="Size"/>
-                    <x-text-input type="number" min="0" name="size”" placeholder="e.g. “size”"/>
+                    <x-text-input type="number" min="0" name="size"
+                                  value="{{ old('_size') }}"
+                                  placeholder="e.g. “size”"/>
+                </div>
+
+            </div>
+            <div class="flex gap-x-5">
+                <div class="flex flex-col gap-y-5 flex-1">
+                    <x-input-label value="Category"/>
+                    <x-select-input :options="\App\Models\Category::all()" value="{{ old('collection_id') }}"
+                                    name="collection_id"/>
                 </div>
                 <div class="flex flex-col gap-y-5 flex-1">
                     <x-input-label value="Collection"/>
-                    <x-select-input :options="$author->collections" name="collection"/>
+                    <x-select-input :options="$author->collections" value="{{ old('category_id') }}"
+                                    name="category_id"/>
                 </div>
             </div>
             <x-form.button text="Create Item"/>
