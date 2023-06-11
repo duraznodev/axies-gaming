@@ -1,4 +1,4 @@
-<x-layout :name="$name">
+<x-app-layout>
     <form class="mt-20 flex flex-col items-center w-[690px] h-[716px] mx-auto">
         <h4 class="text-4xl font-bold">Signup to NFTs</h4>
         <x-form.heading class="mt-16" text="Or signup with email"/>
@@ -16,5 +16,5 @@
         </div>
         <x-form.button class="mt-[34px]" text="Signup"/>
     </form>
-</x-layout>
+</x-app-layout>
 

@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -42,4 +46,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'user_id');
+    }
 }
