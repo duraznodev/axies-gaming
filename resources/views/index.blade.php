@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <div class="pt-[197px] bg-no-repeat" style="background-image: url({{ asset('assets/Graphic.svg') }})">
         <div class="max-w-[1410px] mx-auto">
             <div>
@@ -200,4 +200,4 @@
 
     </div>
 
-</x-app-layout>
+</x-guest-layout>

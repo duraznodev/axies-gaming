@@ -1,11 +1,12 @@
 <div {{ $attributes->merge(['class'=>"min-w-[330px] bg-[#343444] rounded-[20px] px-5"]) }}>
     <div class="py-5">
         <div class="h-[290px] bg-[#7A798A] rounded-[20px]"></div>
-        <a href="{{ action([\App\Http\Controllers\AuthorItemController::class,'show'],['author'=>$item->author,'item'=>$item]) }}"
+        <a href="{{ $mine?route('items.show',compact('item')):action([\App\Http\Controllers\AuthorItemController::class,'show'],['author'=>$item->author,'item'=>$item]) }}"
            class="mt-5 text-lg font-bold block">{{ strlen($item->title)>28?substr($item->title,0,29)."...":$item->title }}</a>
         <div class="flex justify-between items-center mt-[14px]">
-            <a href="{{ action([\App\Http\Controllers\AuthorController::class,'show'],['author'=>$item->author]) }}"
-               class="flex gap-x-3 items-center block">
+            <a
+                href="{{ $mine?route('profile.edit'):action([\App\Http\Controllers\AuthorController::class,'show'],['author'=>$item->author]) }}"
+                class="flex gap-x-3 items-center block">
                 <div class="h-11 w-11 bg-[#7A798A] rounded-[15px]"></div>
                 <div class="flex flex-col justify-center">
                     <sEpan class="text-[13px] text-[#8A8AA0]">Creator</sEpan>

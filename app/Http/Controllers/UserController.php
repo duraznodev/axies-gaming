@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('items.index', [
-            'items' => auth()->user()->items,
-        ]);
+        //
     }
 
     /**
@@ -22,7 +20,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('items.create', ['author' => auth()->user()]);
+        //
     }
 
     /**
@@ -36,25 +34,23 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Item $item)
+    public function show(User $user)
     {
-        return view('items.show', [
-            'item' => $item,
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Item $item)
+    public function edit(User $user)
     {
-        return view('items.edit', compact('item'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -62,7 +58,7 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Item $item)
+    public function destroy(User $user)
     {
         //
     }

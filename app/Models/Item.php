@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -17,5 +18,4 @@ class Item extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
 }

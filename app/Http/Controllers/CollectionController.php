@@ -12,7 +12,9 @@ class CollectionController extends Controller
      */
     public function index()
     {
-        //
+        return view('collections.index', [
+            'collections' => auth()->user()->collections()->with('author')->get(),
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class CollectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('collections.create',['author'=>auth()->user()]);
     }
 
     /**

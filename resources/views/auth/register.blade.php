@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <x-header name="Register"/>
     <form class="mt-20 flex flex-col items-center w-[690px] h-[716px] mx-auto" method="POST"
           action="{{ route('register') }}">
@@ -41,4 +41,4 @@
             {{ __('Register') }}
         </x-primary-button>
     </form>
-</x-app-layout>
+</x-guest-layout>

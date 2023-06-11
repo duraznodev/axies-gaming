@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-header name="Author"/>
-    <div class="max-w-[1410px] mx-auto mt-20 ">
+    <div class="max-w-[1410px] mx-auto my-20 ">
         <div class="relative bg-[#313037] h-[354px] p-10 rounded-[12px]">
             <div class="flex justify-between">
                 <div class="flex gap-10">

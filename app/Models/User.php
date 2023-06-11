@@ -16,6 +16,7 @@ class User extends Authenticatable
     {
         return 'slug';
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,6 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'uuid',
+        'slug'
     ];
 
     /**
@@ -50,5 +53,10 @@ class User extends Authenticatable
     public function items()
     {
         return $this->hasMany(Item::class, 'user_id');
+    }
+
+    public function collections()
+    {
+        return $this->hasMany(Collection::class, 'user_id');
     }
 }
