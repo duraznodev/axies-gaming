@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-header name="My Collections"/>
     <div class="max-w-[1410px] mx-auto my-20 ">
-        <div class="mt-[60px] flex flex-wrap">
+        <div class="mt-[60px] flex flex-wrap gap-[30px]">
             @foreach($collections as $collection)
                 <div class="p-5 bg-[#343444] rounded-[10px] min-w-[450px] max-w-[450px]">
                     <div class="grid grid-cols-6 gap-[10px] ">

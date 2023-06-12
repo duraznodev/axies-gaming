@@ -12,7 +12,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#14141F] text-white">
+<body class="bg-[#14141F] text-white antialiased">
 <x-navbar>
     <x-slot name="anchor">
         <a href="{{ action([\App\Http\Controllers\Auth\AuthenticatedSessionController::class,'create']) }}" class="flex gap-x-2 items-center justify-center py-[13px] px-[35px] border border-[#5142FC] rounded-3xl ">

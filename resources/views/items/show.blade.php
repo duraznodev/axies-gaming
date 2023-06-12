@@ -2,7 +2,10 @@
     <x-header name="Item Details {{ $item->id }}"/>
     <div class="py-20 max-w-[1410px] mx-auto">
         <div class="flex gap-x-[100px]">
-            <div class="bg-[#7A798A] rounded-[10px] w-[690px] h-[690px]">
+            <div class="bg-[#7A798A] rounded-[10px] w-[690px] h-[690px] overflow-hidden">
+                @if($item->getFirstMediaUrl($item->author->name))
+                    <img src="{{ $item->getFirstMediaUrl($item->author->name) }}"  class="w-full h-full object-center bg-cover"/>
+                @endif
             </div>
             <div class="min-w-[620px]">
                 <div>
@@ -52,7 +55,7 @@
                 </div>
                 <div class="mt-4">
                     <a href="{{ action([\App\Http\Controllers\ItemController::class,'edit'],compact('item')) }}"
-                        class="w-2/4 block rounded-[56px] px-10 py-4 text-center border border-white bg-transparent text-[15px] font-bold ">
+                       class="w-2/4 block rounded-[56px] px-10 py-4 text-center border border-white bg-transparent text-[15px] font-bold ">
                         Edit Item
                     </a>
                 </div>

@@ -30,7 +30,14 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required'],
+        ]);
+        $data['user_id'] = auth()->user()->id;
+
+        $collection = auth()->user()->collections()->create($data);
+
+        return redirect()->back();
     }
 
     /**

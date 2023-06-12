@@ -38,7 +38,8 @@
                 </div>
             </div>
         </div>
-        <form class="flex flex-col gap-y-6 w-full" enctype="multipart/form-data">
+        <form method="post" action="{{ action([\App\Http\Controllers\CollectionController::class,"store"]) }}" class="flex flex-col gap-y-6 w-full" enctype="multipart/form-data">
+            @csrf
             <div class="flex flex-col gap-y-5">
                 <x-input-label value="Name"/>
                 <x-text-input name="name" placeholder="Collection Name"/>

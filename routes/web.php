@@ -5,6 +5,9 @@ use App\Http\Controllers\AuthorItemController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Category;
+use App\Models\Collection;
+use App\Models\Item;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +29,8 @@ Route::scopeBindings()->group(function () {
     Route::resource('authors', AuthorController::class)->only(['index', 'show']);
     Route::get('/authors/{author}/{item}', [AuthorItemController::class, 'show']);
 });
+
+Route::view('explore', 'explore',['items'=> Item::all(),'categories'=> Category::all(),'collections'=> Collection::all()])->name('explore');
 
 Route::middleware('auth')->group(function () {
     Route::resource('items', ItemController::class);

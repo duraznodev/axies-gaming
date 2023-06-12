@@ -1,6 +1,10 @@
-<div {{ $attributes->merge(['class'=>"min-w-[330px] bg-[#343444] rounded-[20px] px-5"]) }}>
+<div {{ $attributes->merge(['class'=>"min-w-[330px] w-[330px] bg-[#343444] rounded-[20px] px-5"]) }}>
     <div class="py-5">
-        <div class="h-[290px] bg-[#7A798A] rounded-[20px]"></div>
+        <div class="h-[290px] bg-[#7A798A] overflow-hidden rounded-[20px]">
+            @if($item->getFirstMediaUrl($item->author->name))
+                <img src="{{ $item->getFirstMediaUrl($item->author->name) }}"  class="w-full h-full object-center bg-cover"/>
+            @endif
+        </div>
         <a href="{{ $mine?route('items.show',compact('item')):action([\App\Http\Controllers\AuthorItemController::class,'show'],['author'=>$item->author,'item'=>$item]) }}"
            class="mt-5 text-lg font-bold block">{{ strlen($item->title)>28?substr($item->title,0,29)."...":$item->title }}</a>
         <div class="flex justify-between items-center mt-[14px]">

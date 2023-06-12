@@ -31,13 +31,5 @@ class ItemCreateRequest extends FormRequest
             'collection_id' => ['required'],
             'category_id' => ['required'],
         ];
-        //        "method" => "fixed_price"
-        //      "price" => "586"
-        //      "title" => "Aut inventore optio"
-        //      "description" => "Et sed suscipit nesc"
-        //      "royalties" => "19"
-        //      "size”" => "41"
-        //      "collection_id" => "8"
-        //      "category_id" => "1"
     }
 }

@@ -1,37 +1,12 @@
 <x-app-layout>
+    @push('scripts')
+        @vite('resources/js/previewCard.js')
+    @endpush
     <x-header name="Create Item"/>
     <div class="max-w-[1410px] mx-auto flex gap-x-20 my-20 ">
         <div>
-            <span class="text-xl font-bold">Preview Item</span>
-            <div class="min-w-[330px] bg-[#343444] rounded-[20px] px-5">
-                <div class="py-5">
-                    <div class="h-[290px] bg-[#7A798A] rounded-[20px]"></div>
-                    <span
-                        class="mt-5 text-lg font-bold block"></span>
-                    <div class="flex justify-between items-center mt-[14px]">
-                        <span
-                            class="flex gap-x-3 items-center">
-                            <div class="h-11 w-11 bg-[#7A798A] rounded-[15px]"></div>
-                            <div class="flex flex-col justify-center">
-                                <sEpan class="text-[13px] text-[#8A8AA0]">Creator</sEpan>
-                                <span class="text-[15px] font-bold"></span>
-                            </div>
-                        </span>
-                        <div class="text-xs font-bold py-[2px] px-3 bg-[#5142FC] rounded-lg">BSC</div>
-                    </div>
-                </div>
-                <div>
-                    <div class="bg-[#14141F] h-[1px]"></div>
-                    <div class="pt-[15px] pb-[11px] flex items-center justify-between">
-                        <div class="flex flex-col">
-                            <span class="text-[13px] text-[#8A8AA0]">Current Bid</span>
-                            <span class="font-bold text-lg"> BCS <span
-                                    class="text-[13px] text-[#8A8AA0]">= $12.246</span></span>
-                        </div>
-                        <x-likes number="100"/>
-                    </div>
-                </div>
-            </div>
+            <p class="text-xl font-bold">Preview Item</p>
+            <x-item.preview-card class="mt-5"/>
         </div>
         <form method="post" action="{{ action([\App\Http\Controllers\ItemController::class,'store']) }}"
               class="flex flex-col gap-y-6 w-full" enctype="multipart/form-data">
@@ -43,7 +18,9 @@
                         <span class="text-sm text-[#8A8AA0]">PNG, JPG, GIF, WEBP or MP4. Max 200mb.</span>
                         <x-form.button class="hover:scale-105 as" text="Upload File"/>
                     </div>
-                    <input type="file" class="cursor-pointer opacity-0 absolute top-0 left-0 w-full h-full">
+                    <input accept="image/*" type="file" name="image"
+                           id="input-file"
+                           class="cursor-pointer opacity-0 absolute top-0 left-0 w-full h-full">
                 </div>
             </div>
             <div class="flex flex-col gap-y-5 items-start">
@@ -84,13 +61,13 @@
             <div class="flex gap-x-5">
                 <div class="flex flex-col gap-y-5 flex-1">
                     <x-input-label value="Category"/>
-                    <x-select-input :options="\App\Models\Category::all()" value="{{ old('collection_id') }}"
-                                    name="collection_id"/>
+                    <x-select-input :options="\App\Models\Category::all()"
+                                    name="category_id"/>
                 </div>
                 <div class="flex flex-col gap-y-5 flex-1">
                     <x-input-label value="Collection"/>
-                    <x-select-input :options="$author->collections" value="{{ old('category_id') }}"
-                                    name="category_id"/>
+                    <x-select-input :options="$author->collections"
+                                    name="collection_id"/>
                 </div>
             </div>
             <x-form.button text="Create Item"/>

@@ -23,7 +23,7 @@
                     <a href="#" class="font-bold text-[18px]">Home</a>
                 </li>
                 <li class="">
-                    <a href="" class="font-bold text-[18px] flex gap-x-1.5 items-baseline ">Explore
+                    <a href="{{ route('explore') }}" class="font-bold text-[18px] flex gap-x-1.5 items-baseline ">Explore
                     </a>
                 </li>
                 <li class="">

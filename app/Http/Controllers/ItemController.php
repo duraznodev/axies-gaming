@@ -34,10 +34,12 @@ class ItemController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
+        $data['user_id'] = auth()->user()->id;
 
-        $item = auth()->user()->items()->create($data);
+        $item = Item::create($data);
+        $item->addMediaFromRequest('image')->usingName($item->title)->toMediaCollection($item->author->name);
 
-        return redirect()->route('items.show', $item);
+        return redirect()->route('items.show', compact('item'));
     }
 
     /**

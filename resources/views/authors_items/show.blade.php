@@ -2,7 +2,10 @@
     <x-header name="Item Details {{ $item->id }}"/>
     <div class="py-20 max-w-[1410px] mx-auto">
         <div class="flex gap-x-[100px]">
-            <div class="bg-[#7A798A] rounded-[10px] w-[690px] h-[690px]">
+            <div class="bg-[#7A798A] rounded-[10px] w-[690px] h-[690px] overflow-hidden">
+                @if($item->getFirstMediaUrl($item->author->name))
+                    <img src="{{ $item->getFirstMediaUrl($item->author->name) }}"  class="w-full h-full object-center object-cover"/>
+                @endif
             </div>
             <div class="min-w-[620px]">
                 <div>

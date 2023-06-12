@@ -11,8 +11,9 @@
         rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('scripts')
 </head>
-<body class="bg-[#14141F] text-white">
+<body class="bg-[#14141F] text-white antialiased">
 <x-navbar>
     <x-slot name="anchor">
         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -52,5 +53,6 @@
 
 {{ $slot }}
 <x-footer/>
+
 </body>
 </html>
