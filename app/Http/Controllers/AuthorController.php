@@ -33,6 +33,17 @@ class AuthorController extends Controller
         //
     }
 
+    public function follow(User $author)
+    {
+        try {
+            auth()->user()->following()->attach($author);
+        }
+        catch (\Exception $e){
+            auth()->user()->following()->detach($author);
+        }
+        return back();
+    }
+
     /**
      * Display the specified resource.
      */

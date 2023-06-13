@@ -3,8 +3,8 @@
     <div class="py-20 max-w-[1410px] mx-auto">
         <div class="flex gap-x-[100px]">
             <div class="bg-[#7A798A] rounded-[10px] w-[690px] h-[690px] overflow-hidden">
-                @if($item->getFirstMediaUrl($item->author->name))
-                    <img src="{{ $item->getFirstMediaUrl($item->author->name) }}"  class="w-full h-full object-center object-cover"/>
+                @if($item->getFirstMediaUrl('items'))
+                    <img src="{{ $item->getFirstMediaUrl('items') }}"  class="w-full h-full object-center object-cover"/>
                 @endif
             </div>
             <div class="min-w-[620px]">
@@ -41,7 +41,10 @@
                     </div>
                 </div>
                 <div class="mt-6 bg-[#343444] rounded-2xl p-3 flex gap-x-3 w-3/6">
-                    <div class="bg-[#7A798A] h-11 w-11 rounded-2xl">
+                    <div class="bg-[#7A798A] overflow-hidden h-11 w-11 rounded-2xl">
+                        @if($item->author->getFirstMediaUrl('users'))
+                            <img src="{{ $item->author->getFirstMediaUrl('users') }}"  class="w-full h-full object-center object-cover"/>
+                        @endif
                     </div>
                     <div class="flex flex-col justify-center">
                         <span class="text-[13px] text-[#8A8AA0]">Created By</span>

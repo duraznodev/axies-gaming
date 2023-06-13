@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemCreateRequest;
 use App\Models\Item;
+use App\Models\Like;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class ItemController extends Controller
 {
@@ -37,9 +41,26 @@ class ItemController extends Controller
         $data['user_id'] = auth()->user()->id;
 
         $item = Item::create($data);
-        $item->addMediaFromRequest('image')->usingName($item->title)->toMediaCollection($item->author->name);
+        try {
+            $item->addMediaFromRequest('image')->usingName($item->title)->toMediaCollection('items');
+        } catch (FileDoesNotExist $e) {
+        } catch (FileIsTooBig $e) {
+        }
 
         return redirect()->route('items.show', compact('item'));
+    }
+
+    public function like(Item $item)
+    {
+        try {
+            $item->likes()->create([
+                'user_id' => Auth::user()->id,
+            ]);
+        }
+        catch (\Exception $e){
+            $item->likes()?->where('user_id', Auth::user()->id)->delete();
+        }
+        return back();
     }
 
     /**
@@ -47,15 +68,20 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return view('items.show', [
-            'item' => $item,
-        ]);
+        if ($item->user_id == Auth::user()->id) {
+            return view('items.show', [
+                'item' => $item,
+            ]);
+        }else{
+            return redirect()->action([AuthorItemController::class, 'show'], ['author'=>$item->author,'item' => $item]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Item $item)
+    public
+    function edit(Item $item)
     {
         return view('items.edit', compact('item'));
     }
@@ -63,7 +89,8 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Item $item)
+    public
+    function update(Request $request, Item $item)
     {
         //
     }
@@ -71,7 +98,8 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Item $item)
+    public
+    function destroy(Item $item)
     {
         //
     }

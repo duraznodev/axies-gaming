@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CollectionController extends Controller
 {
@@ -38,6 +39,20 @@ class CollectionController extends Controller
         $collection = auth()->user()->collections()->create($data);
 
         return redirect()->back();
+    }
+
+    public function like(Collection $collection)
+    {
+
+        try {
+            $collection->likes()->create([
+                'user_id' => Auth::user()->id,
+            ]);
+        }
+        catch (\Exception $e){
+            $collection->likes()?->where('user_id', Auth::user()->id)->delete();
+        }
+        return back();
     }
 
     /**

@@ -1,8 +1,10 @@
 <div {{ $attributes->merge(['class'=>"min-w-[330px] w-[330px] bg-[#343444] rounded-[20px] px-5"]) }}>
     <div class="py-5">
         <div class="h-[290px] bg-[#7A798A] overflow-hidden rounded-[20px]">
-            @if($item->getFirstMediaUrl($item->author->name))
-                <img src="{{ $item->getFirstMediaUrl($item->author->name) }}"  class="w-full h-full object-center bg-cover"/>
+            @if($item->getFirstMediaUrl('items'))
+                <a href="{{ $mine?route('items.show'):action([\App\Http\Controllers\ItemController::class,'show'],['item'=>$item]) }}">
+                    <img src="{{ $item->getFirstMediaUrl('items') }}"  class="w-full h-full object-center bg-cover"/>
+                </a>
             @endif
         </div>
         <a href="{{ $mine?route('items.show',compact('item')):action([\App\Http\Controllers\AuthorItemController::class,'show'],['author'=>$item->author,'item'=>$item]) }}"
@@ -11,9 +13,13 @@
             <a
                 href="{{ $mine?route('profile.edit'):action([\App\Http\Controllers\AuthorController::class,'show'],['author'=>$item->author]) }}"
                 class="flex gap-x-3 items-center block">
-                <div class="h-11 w-11 bg-[#7A798A] rounded-[15px]"></div>
+                <div class="h-11 w-11 bg-[#7A798A] overflow-hidden rounded-[15px]">
+                    @if($item->author->getFirstMediaUrl('users'))
+                        <img src="{{ $item->author->getFirstMediaUrl('users') }}"  class="w-full h-full object-center bg-cover"/>
+                    @endif
+                </div>
                 <div class="flex flex-col justify-center">
-                    <sEpan class="text-[13px] text-[#8A8AA0]">Creator</sEpan>
+                    <span class="text-[13px] text-[#8A8AA0]">Creator</span>
                     <span class="text-[15px] font-bold">{{ $item->author->name }}</span>
                 </div>
             </a>
@@ -28,7 +34,10 @@
                 <span class="font-bold text-lg">{{ $item->price }} BCS <span
                         class="text-[13px] text-[#8A8AA0]">= $12.246</span></span>
             </div>
-            <x-likes number="100"/>
+            <form method="post" action="{{ action([\App\Http\Controllers\ItemController::class,'like'],compact('item')) }}">
+                @csrf
+                <button><x-likes :number="$item->likes()->count()"/></button>
+            </form>
         </div>
     </div>
 </div>

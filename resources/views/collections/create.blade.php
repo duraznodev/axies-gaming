@@ -44,7 +44,7 @@
                 <x-input-label value="Name"/>
                 <x-text-input name="name" placeholder="Collection Name"/>
             </div>
-            <x-form.button text="Create Item"/>
+            <x-form.button text="Create Collection"/>
         </form>
     </div>
 </x-app-layout>

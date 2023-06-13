@@ -20,7 +20,7 @@
         <div class="flex items-center gap-x-[105px]">
             <ul class="flex gap-x-10">
                 <li class="">
-                    <a href="#" class="font-bold text-[18px]">Home</a>
+                    <a href="{{ route('index') }}" class="font-bold text-[18px]">Home</a>
                 </li>
                 <li class="">
                     <a href="{{ route('explore') }}" class="font-bold text-[18px] flex gap-x-1.5 items-baseline ">Explore

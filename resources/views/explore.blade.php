@@ -31,12 +31,14 @@
                     </svg>
                 </div>
                 <div class="flex flex-col mt-2.5 gap-y-2">
-                    @foreach($collections as $collection)
-                        <div class="flex items-center gap-x-2 ">
-                            <input class="w-4 h-4 rounded" type="checkbox" id="{{$collection->id}}">
-                            <label class="text-[13px]" for="{{$collection->id}}">{{ $collection->name }}</label>
-                        </div>
-                    @endforeach
+                    @if(isset($collections))
+                        @foreach($collections as $collection)
+                            <div class="flex items-center gap-x-2 ">
+                                <input class="w-4 h-4 rounded" type="checkbox" id="{{$collection->id}}">
+                                <label class="text-[13px]" for="{{$collection->id}}">{{ $collection->name }}</label>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

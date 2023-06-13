@@ -4,7 +4,10 @@
         <div class="relative bg-[#313037] h-[354px] p-10 rounded-[12px]">
             <div class="flex justify-between">
                 <div class="flex gap-10">
-                    <div class="bg-[#7A798A] h-[274px] w-[274px] rounded-[20px] z-10">
+                    <div class="bg-[#7A798A] h-[274px] w-[274px] overflow-hidden rounded-[20px] z-10">
+                        @if($author->getFirstMediaUrl('users'))
+                            <img src="{{ $author->getFirstMediaUrl('users') }}"  class="w-full h-full object-center bg-cover"/>
+                        @endif
                     </div>
                     <div class="flex flex-col mt-[20px] items-start">
                         <h3 class="text-[#EBEBEB] text-lg">Author Profile</h3>
@@ -59,7 +62,10 @@
                             </svg>
                         </div>
                     </div>
-                    <x-form.button text="Follow" class="px-7 py-[9px]"/>
+                    <form method="post" action="{{ action([\App\Http\Controllers\AuthorController::class,'follow'],compact('author')) }}">
+                        @csrf
+                        <x-form.button text="{{ auth()->user()->following->contains($author)?'Unfollow':'Follow' }}" class="px-7 py-[9px]"/>
+                    </form>
                 </div>
             </div>
             <div class="absolute bottom-0 left-0 bg-[#343444] w-full flex justify-end rounded-b-[12px]">

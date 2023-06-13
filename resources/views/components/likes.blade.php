@@ -1,4 +1,5 @@
-<div class="py-[6px] px-2.5 bg-[#14141F] rounded-lg flex items-center gap-x-[5px]">
+<div
+   class="py-[6px] px-2.5 bg-[#14141F] rounded-lg flex items-center gap-x-[5px]">
     <svg width="16" height="14" viewBox="0 0 16 14" fill="none"
          xmlns="http://www.w3.org/2000/svg">
         <path

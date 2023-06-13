@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Item;
+use App\Models\Like;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    $collections = Collection::with('items.media','author.media')->get();
+    return view('index', ['collections' => $collections]);
 })->name('index');
 
 Route::scopeBindings()->group(function () {
@@ -30,14 +32,24 @@ Route::scopeBindings()->group(function () {
     Route::get('/authors/{author}/{item}', [AuthorItemController::class, 'show']);
 });
 
-Route::view('explore', 'explore',['items'=> Item::all(),'categories'=> Category::all(),'collections'=> Collection::all()])->name('explore');
+Route::get('explore', function (){
+    $items = Item::with('author')->get();
+    $collections = Collection::all();
+    $categories = Category::all();
+    return view('explore', ['items' => $items, 'categories' => $categories, 'collections' => $collections]);
+})->name('explore');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::resource('items', ItemController::class);
+    Route::post('/items/{item}/like', [ItemController::class, 'like'])->name('items.like');
     Route::resource('collections', CollectionController::class);
+    Route::post('/collections/{collection}/like', [CollectionController::class, 'like'])->name('collections.like');
+    Route::post('/authors/{author}/follow', [AuthorController::class, 'follow'])->name('authors.follow');
     Route::get('/user', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/user', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/user', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
