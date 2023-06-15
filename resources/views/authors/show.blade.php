@@ -62,24 +62,27 @@
                             </svg>
                         </div>
                     </div>
-                    <form method="post" action="{{ action([\App\Http\Controllers\AuthorController::class,'follow'],compact('author')) }}">
-                        @csrf
-                        <x-form.button text="{{ auth()->user()->following->contains($author)?'Unfollow':'Follow' }}" class="px-7 py-[9px]"/>
-                    </form>
+                    @if(\Auth::check())
+                        <form method="post" action="{{ action([\App\Http\Controllers\AuthorController::class,'follow'],compact('author')) }}">
+                            @csrf
+                            <x-form.button text="{{ auth()->user()->following->contains($author)?'Unfollow':'Follow' }}" class="px-7 py-[9px]"/>
+                        </form>
+                    @endif
                 </div>
             </div>
             <div class="absolute bottom-0 left-0 bg-[#343444] w-full flex justify-end rounded-b-[12px]">
-                <div class="w-[1087px] flex justify-around py-6">
-                    <button class="font-bold text-xl">ALL</button>
-                    <button class="font-bold text-xl">ART</button>
-                    <button class="font-bold text-xl">MUSIC</button>
-                    <button class="font-bold text-xl">COLLECTIBLES</button>
-                    <button class="font-bold text-xl">SPORTS</button>
-                </div>
+                <form class="w-[1087px] flex justify-around py-6">
+                    <a href="{{action([\App\Http\Controllers\AuthorController::class,'show'],compact('author'))}}" class="font-bold text-xl">ALL</a>
+                    @foreach(\App\Models\Category::all() as $category)
+                        <span class="font-bold text-xl uppercase relative">
+                            <input class="cursor-pointer z-10 w-full absolute opacity-0" type="submit" name="category" value="{{$category->id}}" >{{$category->name}}
+                        </span>
+                    @endforeach
+                </form>
             </div>
         </div>
         <div class="mt-[60px] flex flex-wrap gap-[30px]">
-            @foreach($author->items()->withCount('likes')->get() as $item)
+            @foreach($author->items as $item)
                 <x-item.card :item="$item"/>
             @endforeach
         </div>

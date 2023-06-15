@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -37,8 +38,7 @@ class AuthorController extends Controller
     {
         try {
             auth()->user()->following()->attach($author);
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             auth()->user()->following()->detach($author);
         }
         return back();
@@ -47,10 +47,17 @@ class AuthorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $author)
+    public function show(User $author, Request $request)
     {
+        $author->load(['media', 'items' => function ($query) use ($request) {
+            if (isset($request->category)) {
+                $query = $query->where('category_id', $request->category);
+            }
+            $query->withCount('likes');
+        }]);
+
         return view('authors.show', [
-            'author' => $author->load('media', 'items.media')
+            'author' => $author
         ]);
     }
 
