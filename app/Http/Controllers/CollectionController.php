@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MyEvent;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,24 +36,24 @@ class CollectionController extends Controller
             'name' => ['required'],
         ]);
         $data['user_id'] = auth()->user()->id;
-
-        $collection = auth()->user()->collections()->create($data);
-
+        Auth::user()->collections()->create($data);
         return redirect()->back();
     }
 
+
     public function like(Collection $collection)
     {
-
-        try {
+        if ($like = $collection->likes()->where('user_id', Auth::id())->first()) {
+            $like->delete();
+        } else {
             $collection->likes()->create([
-                'user_id' => Auth::user()->id,
+                'user_id' => Auth::id(),
             ]);
         }
-        catch (\Exception $e){
-            $collection->likes()?->where('user_id', Auth::user()->id)->delete();
-        }
-        return back();
+        event(new MyEvent($collection, Auth::user(), 'collection', $collection->likes()->count()));
+        return response()->json([
+            "count" => $collection->likes()->count(),
+        ]);
     }
 
     /**

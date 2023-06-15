@@ -69,7 +69,7 @@
         <x-home.section-header title="Live Auctions" link="#"/>
         <div class=" h-[552.5px] overflow-y-hidden">
             <div class="mt-10 flex gap-x-[30px] overflow-x-scroll">
-                @foreach(\App\Models\Item::all() as $item)
+                @foreach($items as $item)
                     <x-item.card :item="$item"/>
                 @endforeach
             </div>
@@ -114,7 +114,7 @@
         <div class="mt-[80px]">
             <x-home.section-header title="Popular Collection" link="#"/>
             <div class="flex gap-x-[30px] mt-[38px]">
-                @foreach($collections as $collection)
+                @foreach($collections->take(3) as $collection)
                     <x-item.collection :collection="$collection"/>
                 @endforeach
             </div>

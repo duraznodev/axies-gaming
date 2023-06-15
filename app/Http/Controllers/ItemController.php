@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MyEvent;
 use App\Http\Requests\ItemCreateRequest;
 use App\Models\Item;
 use App\Models\Like;
@@ -50,17 +51,21 @@ class ItemController extends Controller
         return redirect()->route('items.show', compact('item'));
     }
 
-    public function like(Item $item)
+    public function like(Item $item)//id
     {
-        try {
+        if ($like = $item->likes()->where('user_id', Auth::id())->first()) {
+            $like->delete();
+        } else {
             $item->likes()->create([
-                'user_id' => Auth::user()->id,
+                'user_id' => Auth::id(),
             ]);
         }
-        catch (\Exception $e){
-            $item->likes()?->where('user_id', Auth::user()->id)->delete();
-        }
-        return back();
+        event(new MyEvent($item, Auth::user(),'card',$item->likes()->count()));//aca disparo el evento
+        return response()->json([
+            "count"=> $item->likes()->count(),
+        ]);//Retorna response vacio con 204
+//        event(new \App\Events\MyEvent($item, Auth::user()));
+//        return back();
     }
 
     /**
@@ -72,8 +77,8 @@ class ItemController extends Controller
             return view('items.show', [
                 'item' => $item,
             ]);
-        }else{
-            return redirect()->action([AuthorItemController::class, 'show'], ['author'=>$item->author,'item' => $item]);
+        } else {
+            return redirect()->action([AuthorItemController::class, 'show'], ['author' => $item->author, 'item' => $item]);
         }
     }
 

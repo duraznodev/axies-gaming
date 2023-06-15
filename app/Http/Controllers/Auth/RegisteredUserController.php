@@ -43,6 +43,9 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        $user->collections()->create([
+            'name' => $user->name . ' collection',
+        ]);
         $user->addMediaFromRequest('user_img')->usingName($user->name)->toMediaCollection('users');
 
         event(new Registered($user));

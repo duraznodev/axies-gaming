@@ -3,7 +3,7 @@
         <div class="h-[290px] bg-[#7A798A] overflow-hidden rounded-[20px]">
             @if($item->getFirstMediaUrl('items'))
                 <a href="{{ $mine?route('items.show'):action([\App\Http\Controllers\ItemController::class,'show'],['item'=>$item]) }}">
-                    <img src="{{ $item->getFirstMediaUrl('items') }}"  class="w-full h-full object-center bg-cover"/>
+                    <img src="{{ $item->getFirstMediaUrl('items') }}" class="w-full h-full object-center bg-cover"/>
                 </a>
             @endif
         </div>
@@ -15,7 +15,8 @@
                 class="flex gap-x-3 items-center block">
                 <div class="h-11 w-11 bg-[#7A798A] overflow-hidden rounded-[15px]">
                     @if($item->author->getFirstMediaUrl('users'))
-                        <img src="{{ $item->author->getFirstMediaUrl('users') }}"  class="w-full h-full object-center bg-cover"/>
+                        <img src="{{ $item->author->getFirstMediaUrl('users') }}"
+                             class="w-full h-full object-center bg-cover"/>
                     @endif
                 </div>
                 <div class="flex flex-col justify-center">
@@ -34,10 +35,30 @@
                 <span class="font-bold text-lg">{{ $item->price }} BCS <span
                         class="text-[13px] text-[#8A8AA0]">= $12.246</span></span>
             </div>
-            <form method="post" action="{{ action([\App\Http\Controllers\ItemController::class,'like'],compact('item')) }}">
-                @csrf
-                <button><x-likes :number="$item->likes()->count()"/></button>
-            </form>
+            <button id="card-like_{{$item->id}}">
+                <x-likes :number="$item->likes_count"/>
+            </button>
         </div>
     </div>
 </div>
+<script>
+    document.querySelector('#card-like_{{$item->id}}').addEventListener("click", function (e) {
+        fetch("{{ action([\App\Http\Controllers\ItemController::class,'like'],compact('item')) }}",
+            {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    _token: "{{ csrf_token() }}"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Unauthenticated.") {
+                    return alert('You need to login to like this item')
+                }
+            })
+    })
+</script>

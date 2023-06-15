@@ -9,6 +9,6 @@ class AuthorItemController extends Controller
 {
     public function show(User $author, Item $item)
     {
-        return view('authors_items.show', compact('item'));
+        return view('authors_items.show', ['item'=>$item->load('author.media','author.items.media','media')->loadCount('likes')]);
     }
 }

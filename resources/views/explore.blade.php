@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-header name="Explore"/>
     <div class="max-w-[1410px] my-20 mx-auto flex justify-between">
-        <div class="w-[280px] flex flex-col gap-y-6">
+        <form action="{{action([\App\Http\Controllers\ExploreController::class,'index'])}}" class="w-[280px] flex flex-col gap-y-6">
             <div>
                 <div class="flex justify-between ">
                     <span class="text-xl font-bold">Categories</span>
@@ -12,12 +12,14 @@
                     </svg>
                 </div>
                 <div class="flex flex-col mt-2.5 gap-y-2">
-                    @foreach($categories as $category)
-                        <div class="flex items-center gap-x-2 ">
-                            <input class="w-4 h-4 rounded" type="checkbox" id="{{$category->id}}">
-                            <label class="text-[13px]" for="{{$category->id}}">{{ $category->name }}</label>
-                        </div>
-                    @endforeach
+                    @if(isset($categories))
+                        @foreach($categories as $category)
+                            <div class="flex items-center gap-x-2 ">
+                                <input name="categories[]" value="{{$category->id}}" class="w-4 h-4 rounded" type="checkbox" id="{{$category->id}}">
+                                <label class="text-[13px]" for="{{$category->id}}">{{ $category->name }}</label>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <div class="h-[1px] bg-[#343444]"></div>
@@ -34,14 +36,15 @@
                     @if(isset($collections))
                         @foreach($collections as $collection)
                             <div class="flex items-center gap-x-2 ">
-                                <input class="w-4 h-4 rounded" type="checkbox" id="{{$collection->id}}">
+                                <input name="collections[]" value="{{$collection->id}}" class="w-4 h-4 rounded" type="checkbox" id="{{$collection->id}}">
                                 <label class="text-[13px]" for="{{$collection->id}}">{{ $collection->name }}</label>
                             </div>
                         @endforeach
                     @endif
                 </div>
             </div>
-        </div>
+            <button class="border border-white rounded-3xl py-1  font-bold">Filtrar</button>
+        </form>
         <div class="grid grid-cols-3 w-[1070px] gap-9">
             @foreach($items as $item)
                 <x-item.card :item="$item"/>

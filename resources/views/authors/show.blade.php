@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="mt-[60px] flex flex-wrap gap-[30px]">
-            @foreach($author->items as $item)
+            @foreach($author->items()->withCount('likes')->get() as $item)
                 <x-item.card :item="$item"/>
             @endforeach
         </div>

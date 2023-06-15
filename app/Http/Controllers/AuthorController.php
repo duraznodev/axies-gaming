@@ -50,7 +50,7 @@ class AuthorController extends Controller
     public function show(User $author)
     {
         return view('authors.show', [
-            'author' => $author,
+            'author' => $author->load('media', 'items.media')
         ]);
     }
 

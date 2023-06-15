@@ -4,22 +4,15 @@
         <div class="flex gap-x-[100px]">
             <div class="bg-[#7A798A] rounded-[10px] w-[690px] h-[690px] overflow-hidden">
                 @if($item->getFirstMediaUrl('items'))
-                    <img src="{{ $item->getFirstMediaUrl('items') }}"  class="w-full h-full object-center object-cover"/>
+                    <img src="{{ $item->getFirstMediaUrl('items') }}" class="w-full h-full object-center object-cover"/>
                 @endif
             </div>
             <div class="min-w-[620px]">
                 <div>
                     <span class="text-4xl font-bold">{{ $item->title }}</span>
                     <div class="flex justify-between mt-4">
-                        <div class="bg-[#343444] rounded-[40px] py-2 px-[14px] flex gap-x-1.5 items-center">
-                            <svg width="16" height="14" viewBox="0 0 16 14" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M14.7145 1.64647C12.9744 -0.0931851 10.1436 -0.0931851 8.40393 1.64647L7.99986 2.05031L7.59603 1.64647C5.85637 -0.0934206 3.02531 -0.0934206 1.28565 1.64647C-0.418689 3.35081 -0.429756 6.05236 1.25998 7.93072C2.80114 9.64329 7.34643 13.3432 7.53928 13.4998C7.6702 13.6063 7.82773 13.6581 7.98432 13.6581C7.9895 13.6581 7.99468 13.6581 7.99963 13.6578C8.16163 13.6654 8.32481 13.6098 8.45997 13.4998C8.65282 13.3432 13.1986 9.64329 14.7402 7.93048C16.4297 6.05236 16.4186 3.35081 14.7145 1.64647ZM13.69 6.98554C12.4884 8.32042 9.18546 11.0735 7.99963 12.0505C6.8138 11.0738 3.51155 8.32089 2.31018 6.98577C1.13142 5.67561 1.12035 3.80974 2.28452 2.64558C2.87908 2.05125 3.6599 1.75385 4.44072 1.75385C5.22154 1.75385 6.00236 2.05101 6.59693 2.64558L7.48512 3.53377C7.59085 3.6395 7.72412 3.7026 7.86399 3.72474C8.09099 3.77348 8.33729 3.71014 8.51389 3.53401L9.40256 2.64558C10.5919 1.45668 12.5266 1.45692 13.7152 2.64558C14.8794 3.80974 14.8683 5.67561 13.69 6.98554Z"
-                                    fill="white"/>
-                            </svg>
-                            <span class="text-sm font-bold">100</span>
-                        </div>
+                        <x-likes class="bg-[#343444] rounded-[40px] py-2 px-[14px] flex gap-x-1.5 items-center"
+                                 :number="$item->likes_count"/>
                         <div class="flex gap-x-3">
                             <div class="bg-[#343444] rounded-full w-9 h-9 flex justify-center items-center">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -43,7 +36,8 @@
                 <div class="mt-6 bg-[#343444] rounded-2xl p-3 flex gap-x-3 w-3/6">
                     <div class="bg-[#7A798A] overflow-hidden h-11 w-11 rounded-2xl">
                         @if($item->author->getFirstMediaUrl('users'))
-                            <img src="{{ $item->author->getFirstMediaUrl('users') }}"  class="w-full h-full object-center object-cover"/>
+                            <img src="{{ $item->author->getFirstMediaUrl('users') }}"
+                                 class="w-full h-full object-center object-cover"/>
                         @endif
                     </div>
                     <div class="flex flex-col justify-center">
@@ -62,22 +56,25 @@
             <x-home.section-header title="More From This Author" link="#"/>
             <div class="mt-10">
                 <div class="grid grid-cols-4 gap-[30px]">
-                    @foreach($item->author->items as $item)
+                    @foreach($item->author->items()->withCount('likes')->get() as $item)
                         <x-item.card :item="$item"/>
                     @endforeach
                 </div>
             </div>
             <div class="flex items-center justify-center mt-8">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.6667 7H1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M6.83333 12.8337L1 7.00033L6.83333 1.16699" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M12.6667 7H1" stroke="white" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"></path>
+                    <path d="M6.83333 12.8337L1 7.00033L6.83333 1.16699" stroke="white" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
                 <div class="flex gap-x-4 mx-[22px]">
                     <div class="relative flex justify-center items-center">
                         <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="4" cy="4" r="4" fill="white"></circle>
                         </svg>
-                        <svg class="absolute " width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="absolute " width="16" height="16" viewBox="0 0 16 16" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
                             <circle cx="8" cy="8" r="7.5" stroke="white"></circle>
                         </svg>
                     </div>
@@ -92,8 +89,10 @@
                     </svg>
                 </div>
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 7H12.6667" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M6.83301 1.16699L12.6663 7.00033L6.83301 12.8337" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M1 7H12.6667" stroke="white" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"></path>
+                    <path d="M6.83301 1.16699L12.6663 7.00033L6.83301 12.8337" stroke="white" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </div>
         </div>

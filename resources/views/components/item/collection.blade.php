@@ -42,11 +42,29 @@
                 </p>
             </div>
         </div>
-        <form method="post" action="{{ action([\App\Http\Controllers\CollectionController::class,'like'],compact('collection')) }}">
-            @csrf
-            <button>
-                <x-likes :number="$collection->likes()->count()"/>
-            </button>
-        </form>
+        <button id="collection-like_{{$collection->id}}">
+            <x-likes :number="$collection->likes_count"/>
+        </button>
     </div>
 </div>
+<script>
+    document.querySelector('#collection-like_{{$collection->id}}').addEventListener("click", function (e) {
+        fetch("{{ action([\App\Http\Controllers\CollectionController::class,'like'],compact('collection')) }}",
+            {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    _token: "{{ csrf_token() }}"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Unauthenticated.") {
+                    return alert('You need to login to like this item')
+                }
+            });
+    })
+</script>

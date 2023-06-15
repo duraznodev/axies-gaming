@@ -23,8 +23,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $collections = Collection::with('items.media','author.media')->get();
-    return view('index', ['collections' => $collections]);
+    $collections = Collection::with('items.media', 'author.media')->withCount('likes')->get();
+    $items = Item::with('author.media', 'media')->withCount('likes')->get();
+    return view('index', compact('collections', 'items'));
 })->name('index');
 
 Route::scopeBindings()->group(function () {
@@ -32,13 +33,7 @@ Route::scopeBindings()->group(function () {
     Route::get('/authors/{author}/{item}', [AuthorItemController::class, 'show']);
 });
 
-Route::get('explore', function (){
-    $items = Item::with('author')->get();
-    $collections = Collection::all();
-    $categories = Category::all();
-    return view('explore', ['items' => $items, 'categories' => $categories, 'collections' => $collections]);
-})->name('explore');
-
+Route::get('explore', [\App\Http\Controllers\ExploreController::class,'index'])->name('explore');
 
 
 Route::middleware('auth')->group(function () {
