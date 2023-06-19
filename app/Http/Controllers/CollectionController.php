@@ -15,7 +15,7 @@ class CollectionController extends Controller
     public function index()
     {
         return view('collections.index', [
-            'collections' => auth()->user()->collections()->with('author')->get(),
+            'collections' => Auth::user()->collections()->with('author')->withCount('likes')->get(),
         ]);
     }
 

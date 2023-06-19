@@ -33,7 +33,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-6 bg-[#343444] rounded-2xl p-3 flex gap-x-3 w-3/6">
+
+                <a
+                    href="{{ Auth::id()==$item->author->id?route('profile.edit'):action([\App\Http\Controllers\AuthorController::class,'show'],['author'=>$item->author]) }}"
+                    class="mt-6 bg-[#343444] rounded-2xl p-3 flex gap-x-3 w-3/6">
                     <div class="bg-[#7A798A] overflow-hidden h-11 w-11 rounded-2xl">
                         @if($item->author->getFirstMediaUrl('users'))
                             <img src="{{ $item->author->getFirstMediaUrl('users') }}"
@@ -44,7 +47,7 @@
                         <span class="text-[13px] text-[#8A8AA0]">Created By</span>
                         <span class="text-[15px] font-bold">{{ $item->author->name }}</span>
                     </div>
-                </div>
+                </a>
                 <p class="mt-4 text-sm leading-relaxed">{{ $item->description  }}</p>
                 <div class="mt-4 bg-[#343444] rounded-lg w-3/6 py-3 px-6 flex items-center justify-between">
                     <span class="text-lg font-semibold">Price</span><span class="font-bold text-lg">{{ $item->price }} BCS <span
@@ -56,7 +59,7 @@
             <x-home.section-header title="More From This Author" link="#"/>
             <div class="mt-10">
                 <div class="grid grid-cols-4 gap-[30px]">
-                    @foreach($item->author->items()->withCount('likes')->get() as $item)
+                    @foreach($item->author->items as $item)
                         <x-item.card :item="$item"/>
                     @endforeach
                 </div>
