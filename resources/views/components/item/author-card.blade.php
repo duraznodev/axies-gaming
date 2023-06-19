@@ -1,4 +1,4 @@
-<div class="flex items-center gap-4">
+<a href="{{ action([\App\Http\Controllers\AuthorController::class,'show'],['author'=>$author]) }}" class="flex items-center gap-4">
     <div class="relative">
         <div class="bg-[#7A798A] w-[100px] h-[100px] rounded-[34px]"></div>
         <div
@@ -15,4 +15,4 @@
         <h4 class="text-4 font-bold leading-[26px] text-white">{{$author->name}}</h4>
         <h5 class="text-white text-14px leading-[22px] font-bold">214.2 ETH</h5>
     </div>
-</div>
+</a>

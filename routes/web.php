@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\AuthorItemController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
@@ -33,7 +34,7 @@ Route::scopeBindings()->group(function () {
     Route::get('/authors/{author}/{item}', [AuthorItemController::class, 'show']);
 });
 
-Route::get('explore', [\App\Http\Controllers\ExploreController::class,'index'])->name('explore');
+Route::get('explore', [ExploreController::class,'index'])->name('explore');
 
 
 Route::middleware('auth')->group(function () {

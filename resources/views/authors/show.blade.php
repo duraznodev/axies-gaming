@@ -6,7 +6,8 @@
                 <div class="flex gap-10">
                     <div class="bg-[#7A798A] h-[274px] w-[274px] overflow-hidden rounded-[20px] z-10">
                         @if($author->getFirstMediaUrl('users'))
-                            <img src="{{ $author->getFirstMediaUrl('users') }}"  class="w-full h-full object-center bg-cover"/>
+                            <img src="{{ $author->getFirstMediaUrl('users') }}"
+                                 class="w-full h-full object-center bg-cover"/>
                         @endif
                     </div>
                     <div class="flex flex-col mt-[20px] items-start">
@@ -23,8 +24,14 @@
                                     d="M12.9219 4.45312H9.875V1.40625C9.875 0.630844 9.24416 0 8.46875 0H3.54688V14.125H14.3281V5.85938C14.3281 5.08397 13.6973 4.45312 12.9219 4.45312Z"
                                     fill="#7A798A"/>
                             </svg>
-
                         </div>
+                        @can('update', $author)
+                            <div class="flex gap-x-3 mt-6">
+                                <a href="{{route('profile.edit')}}"
+                                    class="text-[#EBEBEB] text-sm border border-[#EBEBEB] rounded-[50px] px-5 py-2">Edit
+                                    Profile</a>
+                            </div>
+                        @endcan
                     </div>
                 </div>
                 <div class="flex gap-x-8  items-start">
@@ -63,19 +70,23 @@
                         </div>
                     </div>
                     @if(\Auth::check())
-                        <form method="post" action="{{ action([\App\Http\Controllers\AuthorController::class,'follow'],compact('author')) }}">
+                        <form method="post"
+                              action="{{ action([\App\Http\Controllers\AuthorController::class,'follow'],compact('author')) }}">
                             @csrf
-                            <x-form.button text="{{ auth()->user()->following->contains($author)?'Unfollow':'Follow' }}" class="px-7 py-[9px]"/>
+                            <x-form.button text="{{ auth()->user()->following->contains($author)?'Unfollow':'Follow' }}"
+                                           class="px-7 py-[9px]"/>
                         </form>
                     @endif
                 </div>
             </div>
             <div class="absolute bottom-0 left-0 bg-[#343444] w-full flex justify-end rounded-b-[12px]">
                 <form class="w-[1087px] flex justify-around py-6">
-                    <a href="{{action([\App\Http\Controllers\AuthorController::class,'show'],compact('author'))}}" class="font-bold text-xl">ALL</a>
+                    <a href="{{action([\App\Http\Controllers\AuthorController::class,'show'],compact('author'))}}"
+                       class="font-bold text-xl">ALL</a>
                     @foreach(\App\Models\Category::all() as $category)
                         <span class="font-bold text-xl uppercase relative">
-                            <input class="cursor-pointer z-10 w-full absolute opacity-0" type="submit" name="category" value="{{$category->id}}" >{{$category->name}}
+                            <input class="cursor-pointer z-10 w-full absolute opacity-0" type="submit" name="category"
+                                   value="{{$category->id}}">{{$category->name}}
                         </span>
                     @endforeach
                 </form>

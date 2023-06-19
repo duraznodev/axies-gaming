@@ -60,9 +60,9 @@ class ItemController extends Controller
                 'user_id' => Auth::id(),
             ]);
         }
-        event(new MyEvent($item, Auth::user(),'card',$item->likes()->count()));//aca disparo el evento
+        event(new MyEvent($item, Auth::user(), 'card', $item->likes()->count()));//aca disparo el evento
         return response()->json([
-            "count"=> $item->likes()->count(),
+            "count" => $item->likes()->count(),
         ]);//Retorna response vacio con 204
 //        event(new \App\Events\MyEvent($item, Auth::user()));
 //        return back();
@@ -97,7 +97,29 @@ class ItemController extends Controller
     public
     function update(Request $request, Item $item)
     {
-        //
+        $data = $request->validate(
+            [
+                'method' => ['required'],
+                'price' => ['required'],
+                'title' => ['required'],
+                'description' => ['string','nullable'],
+                'royalties' => ['required'],
+                'size' => ['required'],
+                'collection_id' => ['required'],
+                'category_id' => ['required'],
+            ]
+        );
+        $data['slug'] = Str::slug($data['title']);
+
+       $item->update($data);
+        try {
+            $item->clearMediaCollection('items');
+            $item->addMediaFromRequest('image')->usingName($item->title)->toMediaCollection('items');
+        } catch (FileDoesNotExist $e) {
+        } catch (FileIsTooBig $e) {
+        }
+
+        return redirect()->route('items.show', compact('item'));
     }
 
     /**

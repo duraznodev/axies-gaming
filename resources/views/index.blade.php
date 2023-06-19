@@ -194,16 +194,5 @@
                 @endforeach
             </div>
         </div>
-        {{--        <div class="mt-[80px]">--}}
-        {{--            <x-home.section-header title="Today's Picks" link="#"/>--}}
-        {{--            <div class="flex gap-x-[30px] gap-y-10 flex-wrap mt-10">--}}
-        {{--                <div class="mt-10 flex gap-x-[30px] flex-wrap">--}}
-        {{--                    @foreach($items as $item)--}}
-        {{--                        <x-item.card :item="$item"/>--}}
-        {{--                    @endforeach--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
-        {{--        <button class="mt-[38px] mb-20 font-bold py-4 px-10 rounded-[30px] border border-white mx-auto">Load More</button>--}}
     </div>
 </x-app-layout>

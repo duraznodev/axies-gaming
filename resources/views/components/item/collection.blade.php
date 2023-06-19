@@ -2,7 +2,7 @@
     <div class="grid grid-cols-6 gap-[10px]">
         @foreach([0,1,2,3,4] as $index)
             @if($collection->items->count() > $index)
-                <a href="{{ action([\App\Http\Controllers\ItemController::class,'show'],['item'=>$collection->items[$index]]) }}"
+                <a href="{{ action([\App\Http\Controllers\AuthorItemController::class,'show'],['author'=>$collection->author,'item'=>$collection->items[$index]]) }}"
                    class="bg-[#7A798A] rounded-[10px] {{ $index<2? "col-span-3":"col-span-2" }} h-[131px]">
                     <img class="w-full h-full rounded-[10px] object-cover"
                          src="{{$collection->items[$index]->getFirstMediaUrl('items')}}"/>

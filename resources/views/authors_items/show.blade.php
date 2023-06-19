@@ -53,6 +53,14 @@
                     <span class="text-lg font-semibold">Price</span><span class="font-bold text-lg">{{ $item->price }} BCS <span
                             class="text-[13px] text-[#8A8AA0]">= $12.246</span></span>
                 </div>
+                @can('update',$item)
+                    <div class="mt-4">
+                        <a href="{{ action([\App\Http\Controllers\ItemController::class,'edit'],compact('item')) }}"
+                           class="w-2/4 block rounded-[56px] px-10 py-4 text-center border border-white bg-transparent text-[15px] font-bold ">
+                            Edit Item
+                        </a>
+                    </div>
+                @endcan
             </div>
         </div>
         <div class="mt-16">
