@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::shouldBeStrict(!$this->app->isProduction());
+        Model::shouldBeStrict(! $this->app->isProduction());
         Relation::enforceMorphMap([
             'item' => 'App\Models\Item',
             'collection' => 'App\Models\Collection',

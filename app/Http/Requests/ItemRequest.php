@@ -22,14 +22,14 @@ class ItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'method' => ['required','string'],
-            'price' => ['required','numeric'],
-            'title' => ['required','string'],
-            'description' => ['required','string'],
-            'royalties' => ['required','numeric'],
-            'size' => ['required','string'],
-            'collection_id' => ['required','integer'],
-            'category_id' => ['required','integer'],
+            'method' => ['required', 'string'],
+            'price' => ['required', 'numeric'],
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'royalties' => ['required', 'numeric'],
+            'size' => ['required', 'string'],
+            'collection_id' => ['required', 'integer'],
+            'category_id' => ['required', 'integer'],
         ];
 
     }

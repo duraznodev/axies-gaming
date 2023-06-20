@@ -27,9 +27,8 @@ class Collection extends Model
         return $this->hasMany(Item::class);
     }
 
-    public function likes():MorphMany
+    public function likes(): MorphMany
     {
         return $this->morphMany(Like::class, 'likeable');
     }
-
 }

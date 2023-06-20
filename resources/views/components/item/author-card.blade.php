@@ -1,6 +1,12 @@
-<a href="{{ action([\App\Http\Controllers\AuthorController::class,'show'],['author'=>$author]) }}" class="flex items-center gap-4">
+<a href="{{ action([\App\Http\Controllers\AuthorController::class,'show'],['author'=>$author]) }}"
+   class="flex items-center gap-4">
     <div class="relative">
-        <div class="bg-[#7A798A] w-[100px] h-[100px] rounded-[34px]"></div>
+        <div class="bg-[#7A798A] w-[100px] h-[100px] overflow-hidden rounded-[34px]">
+            @if($author->getFirstMediaUrl('users'))
+                <img src="{{ $author->getFirstMediaUrl('users') }}"
+                     class="w-full h-full object-center bg-cover"/>
+            @endif
+        </div>
         <div
             class="bg-[#5142FC] w-[26px] h-[26px] absolute bottom-0 right-0 rounded-full py-[7px] px-[5px]">
             <svg width="16" height="12" viewBox="0 0 16 12" fill="none"
@@ -12,7 +18,7 @@
         </div>
     </div>
     <div>
-        <h4 class="text-4 font-bold leading-[26px] text-white">{{$author->name}}</h4>
-        <h5 class="text-white text-14px leading-[22px] font-bold">214.2 ETH</h5>
+        <h4 class="text-4 font-bold leading-[26px] text-white whitespace-nowrap">{{$author->name}}</h4>
+        <h5 class="text-white text-14px leading-[22px] font-bold">{{$author->items_sum_price??0}} BTC</h5>
     </div>
 </a>

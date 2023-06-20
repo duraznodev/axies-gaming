@@ -14,7 +14,7 @@ class AppLayout extends Component
     {
         if (auth()->check()) {
             return view('layouts.app');
-        }else{
+        } else {
             return view('layouts.guest');
         }
     }

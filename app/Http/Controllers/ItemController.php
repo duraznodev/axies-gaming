@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Events\MyEvent;
 use App\Http\Requests\ItemRequest;
 use App\Models\Item;
-use App\Models\Like;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
@@ -60,12 +58,13 @@ class ItemController extends Controller
                 'user_id' => Auth::id(),
             ]);
         }
-        event(new MyEvent($item, Auth::user(), 'card', $item->likes()->count()));//aca disparo el evento
+        event(new MyEvent($item, Auth::user(), 'card', $item->likes()->count())); //aca disparo el evento
+
         return response()->json([
-            "count" => $item->likes()->count(),
-        ]);//Retorna response vacio con 204
-//        event(new \App\Events\MyEvent($item, Auth::user()));
-//        return back();
+            'count' => $item->likes()->count(),
+        ]); //Retorna response vacio con 204
+        //        event(new \App\Events\MyEvent($item, Auth::user()));
+        //        return back();
     }
 
     /**
@@ -85,8 +84,7 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public
-    function edit(Item $item)
+    public function edit(Item $item)
     {
         return view('items.edit', compact('item'));
     }
@@ -94,8 +92,7 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public
-    function update(ItemRequest $request, Item $item)
+    public function update(ItemRequest $request, Item $item)
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
@@ -110,5 +107,4 @@ class ItemController extends Controller
 
         return redirect()->route('items.show', compact('item'));
     }
-
 }

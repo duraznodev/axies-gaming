@@ -28,9 +28,9 @@ class CollectionController extends Controller
         ]);
         $data['user_id'] = auth()->user()->id;
         Auth::user()->collections()->create($data);
+
         return redirect()->back();
     }
-
 
     public function like(Collection $collection)
     {
@@ -42,9 +42,9 @@ class CollectionController extends Controller
             ]);
         }
         event(new MyEvent($collection, Auth::user(), 'collection', $collection->likes()->count()));
+
         return response()->json([
-            "count" => $collection->likes()->count(),
+            'count' => $collection->likes()->count(),
         ]);
     }
-
 }

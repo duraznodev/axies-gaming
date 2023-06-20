@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
     public function index()
     {
-        return view('authors.index', [
-            'authors' => User::all(),
-        ]);
+        $authors = User::with('items.media', 'media')
+            ->withSum('items', 'price')
+            ->get();
+        return view('authors.index', compact('authors'));
     }
 
     public function follow(User $author)
@@ -22,6 +22,7 @@ class AuthorController extends Controller
         } catch (\Exception $e) {
             auth()->user()->following()->detach($author);
         }
+
         return back();
     }
 
@@ -35,8 +36,7 @@ class AuthorController extends Controller
         }]);
 
         return view('authors.show', [
-            'author' => $author
+            'author' => $author,
         ]);
     }
-
 }

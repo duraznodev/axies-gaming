@@ -6,11 +6,9 @@ use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Item;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\isNull;
 
 class ExploreController extends Controller
 {
-
     public function index(Request $request)
     {
 
@@ -26,9 +24,7 @@ class ExploreController extends Controller
             $items = $itemsEager->whereIn('collection_id', $collectionsIds)->orWhereIn('category_id', $categoriesIds)->get();
         }
 
-
-        return view('explore', ['items' => $items
-            , 'categories' => $categories, 'collections' => $collections
+        return view('explore', ['items' => $items, 'categories' => $categories, 'collections' => $collections,
         ]);
     }
 }

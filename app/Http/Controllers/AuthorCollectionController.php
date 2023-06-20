@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Collection;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthorCollectionController extends Controller
 {
@@ -15,5 +12,4 @@ class AuthorCollectionController extends Controller
             'collections' => $author->collections()->with('author')->withCount('likes')->get(),
         ]);
     }
-
 }

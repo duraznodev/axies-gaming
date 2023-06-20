@@ -32,17 +32,17 @@ class Item extends Model implements HasMedia
         return 'slug';
     }
 
-    public function author():BelongsTo
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function collection():BelongsTo
+    public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class);
     }
 
-    public function likes():MorphMany
+    public function likes(): MorphMany
     {
         return $this->morphMany(Like::class, 'likeable');
     }

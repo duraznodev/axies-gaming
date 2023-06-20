@@ -189,7 +189,7 @@
         <div class="my-[80px]">
             <x-home.section-header title="Top Seller" link="#"/>
             <div class="flex flex-wrap mt-10 gap-x-[68px] grid grid-cols-5 gap-y-7">
-                @foreach(\App\Models\User::all()->take(10) as $author)
+                @foreach($authors->take(10) as $author)
                     <x-item.author-card :author="$author"/>
                 @endforeach
             </div>
