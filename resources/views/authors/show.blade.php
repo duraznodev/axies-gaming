@@ -28,7 +28,7 @@
                         @can('update', $author)
                             <div class="flex gap-x-3 mt-6">
                                 <a href="{{route('profile.edit')}}"
-                                    class="text-[#EBEBEB] text-sm border border-[#EBEBEB] rounded-[50px] px-5 py-2">Edit
+                                   class="text-[#EBEBEB] text-sm border border-[#EBEBEB] rounded-[50px] px-5 py-2">Edit
                                     Profile</a>
                             </div>
                         @endcan
@@ -80,20 +80,36 @@
                 </div>
             </div>
             <div class="absolute bottom-0 left-0 bg-[#343444] w-full flex justify-end rounded-b-[12px]">
-                <form class="w-[1087px] flex justify-around py-6">
+                <form class="w-[1087px] flex justify-around  ">
                     <a href="{{action([\App\Http\Controllers\AuthorController::class,'show'],compact('author'))}}"
-                       class="font-bold text-xl">ALL</a>
-                    @foreach(\App\Models\Category::all() as $category)
-                        <span class="font-bold text-xl uppercase relative">
-                            <input class="cursor-pointer z-10 w-full absolute opacity-0" type="submit" name="category"
+                       class="font-bold text-xl py-6">ALL
+                        @if($categoryId==0)
+                            <svg class="absolute bottom-0 mx-auto" width="24" height="10" viewBox="0 0 24 10"
+                                 fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 0L24 10H0L12 0Z" fill="#14141F"/>
+                            </svg>
+                        @endif
+                    </a>
+                    @foreach(\App\Models\Category::all() as $index=>$category)
+                        <span class="font-bold text-xl uppercase relative flex items-center justify-center">
+                            <input class="cursor-pointer z-10 w-full absolute opacity-0 h-full "
+                                   type="submit" name="category"
                                    value="{{$category->id}}">{{$category->name}}
+                            @if($index+1==$categoryId)
+                                <svg class="absolute bottom-0 mx-auto" width="24" height="10" viewBox="0 0 24 10"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 0L24 10H0L12 0Z" fill="#14141F"/>
+                                </svg>
+                            @endif
                         </span>
                     @endforeach
                 </form>
             </div>
         </div>
         <div class="mt-[60px] flex flex-wrap gap-[30px]">
-            @foreach($author->items()->with('author')->withCount('likes')->get() as $item)
+            @foreach($author->items as $item)
                 <x-item.card :item="$item"/>
             @endforeach
         </div>

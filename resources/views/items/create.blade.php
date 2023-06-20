@@ -7,6 +7,9 @@
         <div>
             <p class="text-xl font-bold">Preview Item</p>
             <x-item.preview-card class="mt-5"/>
+            <div class="mt-8">
+                <a class="border justify-center py-[14px] rounded-[30px] border-[#5142FC] flex items-center" href="{{action([\App\Http\Controllers\CollectionController::class,'create'])}}">Make New Collection</a>
+            </div>
         </div>
         <form method="post" action="{{ action([\App\Http\Controllers\ItemController::class,'store']) }}"
               class="flex flex-col gap-y-6 w-full" enctype="multipart/form-data">

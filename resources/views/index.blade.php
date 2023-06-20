@@ -32,7 +32,6 @@
                                 </clipPath>
                             </defs>
                         </svg>
-
                         <span class="text-15px font-bold leading-[22px] text-white">Explore</span>
                     </a>
                     <a class="w-[154px] text-black justify-center py-[14px] rounded-[30px] bg-white flex gap-2 items-center"
@@ -133,7 +132,8 @@
     </div>
     </div>
     <div class="h-[771px] bg-[#0D0D11] pt-[60px]">
-        <x-home.section-header title="Today's Picks" link="#"/>
+        <x-home.section-header title="Today's Picks"
+                               link="{{action([\App\Http\Controllers\ExploreController::class,'index'])}}"/>
         <div class=" h-[552.5px] overflow-y-hidden">
             <div class="mt-10 flex gap-x-[30px] overflow-x-scroll">
                 @foreach($items as $item)
@@ -179,7 +179,8 @@
     </div>
     <div class="max-w-[1410px] mx-auto  flex flex-col gap-y-20">
         <div class="mt-[80px]">
-            <x-home.section-header title="Popular Collection" link="#"/>
+            <x-home.section-header title="Popular Collection"
+                                   link="{{action([\App\Http\Controllers\CollectionController::class,'index'])}}"/>
             <div class="flex gap-x-[30px] mt-[38px]">
                 @foreach($collections->take(3) as $collection)
                     <x-item.collection :collection="$collection"/>
@@ -187,7 +188,8 @@
             </div>
         </div>
         <div class="my-[80px]">
-            <x-home.section-header title="Top Seller" link="#"/>
+            <x-home.section-header title="Top Seller"
+                                   link="{{action([\App\Http\Controllers\AuthorController::class,'index'])}}"/>
             <div class="flex flex-wrap mt-10 gap-x-[68px] grid grid-cols-5 gap-y-7">
                 @foreach($authors->take(10) as $author)
                     <x-item.author-card :author="$author"/>

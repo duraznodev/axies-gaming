@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorController extends Controller
 {
@@ -12,18 +13,21 @@ class AuthorController extends Controller
         $authors = User::with('items.media', 'media')
             ->withSum('items', 'price')
             ->get();
+
         return view('authors.index', compact('authors'));
     }
 
     public function follow(User $author)
     {
-        try {
-            auth()->user()->following()->attach($author);
-        } catch (\Exception $e) {
-            auth()->user()->following()->detach($author);
+        $authFollowings = Auth::user()->following();
+
+        if ($authFollowings->where('followed_id', $author->id)->exists()) {
+            $authFollowings->detach($author);
+        } else {
+            $authFollowings->attach($author);
         }
 
-        return back();
+        return redirect()->back();
     }
 
     public function show(User $author, Request $request)
@@ -37,6 +41,7 @@ class AuthorController extends Controller
 
         return view('authors.show', [
             'author' => $author,
+            'categoryId' => $request->category ?? 0,
         ]);
     }
 }

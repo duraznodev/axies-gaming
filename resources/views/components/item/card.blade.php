@@ -2,7 +2,7 @@
     <div class="py-5">
         <div class="h-[290px] bg-[#7A798A] overflow-hidden rounded-[20px]">
             @if($item->getFirstMediaUrl('items'))
-                <a href="{{ Auth::id()==$item->author->id?route('items.show',compact('item')): action([\App\Http\Controllers\ItemController::class,'show'],compact('item'))}}">
+                <a href="{{  action([\App\Http\Controllers\ItemController::class,'show'],compact('item'))}}">
                     <img src="{{ $item->getFirstMediaUrl('items') }}" class="w-full h-full object-center bg-cover"/>
                 </a>
             @endif

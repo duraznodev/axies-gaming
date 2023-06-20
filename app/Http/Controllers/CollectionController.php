@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MyEvent;
+use App\Events\LikeEvent;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +29,7 @@ class CollectionController extends Controller
         $data['user_id'] = auth()->user()->id;
         Auth::user()->collections()->create($data);
 
-        return redirect()->back();
+        return redirect()->action([AuthorCollectionController::class,'index'], ['author' => Auth::user()]);
     }
 
     public function like(Collection $collection)
@@ -41,7 +41,7 @@ class CollectionController extends Controller
                 'user_id' => Auth::id(),
             ]);
         }
-        event(new MyEvent($collection, Auth::user(), 'collection', $collection->likes()->count()));
+        event(new LikeEvent($collection, Auth::user(), 'collection', $collection->likes()->count()));
 
         return response()->json([
             'count' => $collection->likes()->count(),

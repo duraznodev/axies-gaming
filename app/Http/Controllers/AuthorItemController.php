@@ -10,7 +10,7 @@ class AuthorItemController extends Controller
     public function show(User $author, Item $item)
     {
         $item = $item->load(['author.media', 'author.items.media', 'media', 'author.items' => function ($query) use ($item) {
-            $query->withCount('likes')->where('id', '!=', $item->id);
+            $query->with('author')->withCount('likes')->where('id', '!=', $item->id);
         }])->loadCount('likes');
 
         return view('authors_item.show', compact('item'));
@@ -20,6 +20,6 @@ class AuthorItemController extends Controller
     {
         $item->delete();
 
-        return redirect()->route('authors.show', $author);
+        return redirect()->action([AuthorController::class, 'show'], ['author' => $author]);
     }
 }
