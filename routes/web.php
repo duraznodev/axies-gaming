@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorCollectionController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\AuthorItemController;
 use App\Http\Controllers\CollectionController;
@@ -31,7 +32,8 @@ Route::get('/', function () {
 
 Route::scopeBindings()->group(function () {
     Route::resource('authors', AuthorController::class)->only(['index', 'show']);
-    Route::get('/authors/{author}/{item}', [AuthorItemController::class, 'show']);
+    Route::get('/authors/{author}/items/{item}', [AuthorItemController::class, 'show']);
+    Route::get('/authors/{author}/collections', [AuthorCollectionController::class, 'index']);
 });
 
 Route::get('explore', [ExploreController::class,'index'])->name('explore');

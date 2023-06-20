@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\MyEvent;
-use App\Http\Requests\ItemCreateRequest;
+use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use App\Models\Like;
 use Illuminate\Http\Request;
@@ -35,7 +35,7 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemCreateRequest $request)
+    public function store(ItemRequest $request)
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
@@ -95,20 +95,9 @@ class ItemController extends Controller
      * Update the specified resource in storage.
      */
     public
-    function update(Request $request, Item $item)
+    function update(ItemRequest $request, Item $item)
     {
-        $data = $request->validate(
-            [
-                'method' => ['required'],
-                'price' => ['required'],
-                'title' => ['required'],
-                'description' => ['string','nullable'],
-                'royalties' => ['required'],
-                'size' => ['required'],
-                'collection_id' => ['required'],
-                'category_id' => ['required'],
-            ]
-        );
+        $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
 
        $item->update($data);

@@ -5,6 +5,7 @@
  */
 
 import axios from 'axios';
+
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -18,6 +19,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import Echo from 'laravel-echo';
 
 import Pusher from 'pusher-js';
+
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
@@ -31,7 +33,10 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 var channel = window.Echo.channel('my-channel');
-channel.listen('.my-event', function(data) {//aca escucha el evento y si se ejecuta el evento en el servidor se ejecuta esta funcion
-    console.log(`#${data.type}-like_${data.item.id} .count`)
-    document.querySelector(`#${data.type}-like_${data.item.id} .count`).innerHTML = data.count;
+channel.listen('.my-event', function (data) {//aca escucha el evento y si se ejecuta el evento en el servidor se ejecuta esta funcion
+    const count = document.querySelector(`#${data.type}-like_${data.item.id} .count`)
+    const heart = document.querySelector(`#${data.type}-like_${data.item.id} >div >svg >path`)
+    heart.style.fill = data.liked ? 'red' : 'white';
+    count.innerHTML = data.count;
+
 });
