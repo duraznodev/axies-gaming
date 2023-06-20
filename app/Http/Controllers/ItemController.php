@@ -100,7 +100,7 @@ class ItemController extends Controller
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
 
-       $item->update($data);
+        $item->update($data);
         try {
             $item->clearMediaCollection('items');
             $item->addMediaFromRequest('image')->usingName($item->title)->toMediaCollection('items');
@@ -111,12 +111,4 @@ class ItemController extends Controller
         return redirect()->route('items.show', compact('item'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public
-    function destroy(Item $item)
-    {
-        //
-    }
 }

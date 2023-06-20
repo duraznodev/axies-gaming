@@ -61,6 +61,19 @@
                         </a>
                     </div>
                 @endcan
+                @can('delete',$item)
+                    <form
+                        class="mt-4"
+                        method="post"
+                        action="{{ action([\App\Http\Controllers\AuthorItemController::class,'destroy'],['author'=>$item->author,'item'=>$item]) }}">
+                        @method('DELETE')
+                        @csrf
+                        <button
+                            class="w-2/4 block rounded-[56px] px-10 py-4 text-center border border-white bg-red-600 text-[15px] font-bold ">
+                            Delete Item
+                        </button>
+                    </form>
+                @endcan
             </div>
         </div>
         <div class="mt-16">

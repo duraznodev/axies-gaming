@@ -7,7 +7,7 @@
                 </a>
             @endif
         </div>
-        <a href="{{ Auth::id()==$item->author->id?route('items.show',compact('item')):action([\App\Http\Controllers\AuthorItemController::class,'show'],['author'=>$item->author,'item'=>$item]) }}"
+        <a href="{{ action([\App\Http\Controllers\AuthorItemController::class,'show'],['author'=>$item->author,'item'=>$item]) }}"
            class="mt-5 text-lg font-bold block">{{ strlen($item->title)>28?substr($item->title,0,29)."...":$item->title }}</a>
         <div class="flex justify-between items-center mt-[14px]">
             <a

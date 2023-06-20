@@ -33,6 +33,7 @@ Route::get('/', function () {
 Route::scopeBindings()->group(function () {
     Route::resource('authors', AuthorController::class)->only(['index', 'show']);
     Route::get('/authors/{author}/items/{item}', [AuthorItemController::class, 'show']);
+    Route::delete('/authors/{author}/items/{item}', [AuthorItemController::class, 'destroy']);
     Route::get('/authors/{author}/collections', [AuthorCollectionController::class, 'index']);
 });
 
